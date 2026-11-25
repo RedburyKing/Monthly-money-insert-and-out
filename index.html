@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Ikmal's Wallet</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--panel:#121d2e;--panel2:#1a2940;--text:#edf3fb;--muted:#9aabc1;--line:#293a52;--green:#35c98b;--red:#ff707a;--blue:#75aaff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#172942 0,#0b1220 55%);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);min-height:100vh;padding:24px 14px 50px}
+main{max-width:850px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.eyebrow{font-size:11px;letter-spacing:.16em;color:var(--muted);font-weight:700}.tag{border:1px solid #315b4d;color:#8de5bd;background:#15372d;padding:6px 10px;border-radius:99px;font-size:12px}
+h1{font-size:clamp(26px,5vw,36px);margin:3px 0}.sub{color:var(--muted);margin:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:linear-gradient(145deg,#17263b,#111c2c);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 12px 30px #0002}.hero{grid-column:1/-1}.label{font-size:12px;color:var(--muted);font-weight:650}.big{font-size:clamp(26px,5vw,36px);font-weight:800;letter-spacing:-.04em;margin:6px 0}.green{color:var(--green)}.red{color:var(--red)}.muted{color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.divider{height:1px;background:var(--line);margin:14px 0}.accounts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.account{background:#0c1726;border:1px solid var(--line);border-radius:13px;padding:13px}.account strong{display:block;font-size:20px;margin-top:5px}
+h2{font-size:18px;margin:0 0 14px}.section{margin-top:14px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label{font-size:12px;color:var(--muted);font-weight:650}input,select{width:100%;background:#0b1625;color:var(--text);border:1px solid #34465f;border-radius:10px;padding:12px;font:inherit;min-height:44px}input:focus,select:focus{outline:2px solid var(--blue);border-color:transparent}button,.filebtn{border:0;border-radius:11px;padding:12px 15px;font:700 14px system-ui;cursor:pointer;background:var(--green);color:#062319}.btnrow{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}.secondary{background:#263851;color:var(--text)}.dangerbtn{background:#482832;color:#ffc2c6}.small{font-size:12px;padding:7px 10px}.tabs{display:flex;gap:8px;margin-bottom:14px}.tabs button{flex:1;background:#1a2a40;color:var(--muted)}.tabs button.active{background:#d8e8ff;color:#14243a}.history{display:flex;flex-direction:column}.tx{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.tx:last-child{border-bottom:0}.txname{font-weight:700}.txmeta{font-size:12px;color:var(--muted);margin-top:3px}.amount{font-weight:800;white-space:nowrap}.empty{text-align:center;color:var(--muted);padding:24px 8px}.notice{font-size:12px;color:var(--muted);line-height:1.5}.hidden{display:none!important}
+@media(max-width:560px){body{padding:18px 11px 36px}.grid{gap:9px}.card{padding:14px}.accounts{gap:8px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.tx{grid-template-columns:1fr auto}.tx .delete{grid-column:2;grid-row:1}.amount{grid-column:2;grid-row:1}.txmeta{max-width:210px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <div><div class="eyebrow">PERSONAL FINANCE TRACKER</div><h1>Ikmal's Wallet</h1><p class="sub">Your money, organised in one place.</p></div>
+    <span class="tag">PERSONAL</span>
+  </header>
+
+  <section class="grid">
+    <article class="card hero">
+      <div class="label">TOTAL MONEY REMAINING</div>
+      <div class="big green" id="totalBalance">RM739.80</div>
+      <div class="divider"></div>
+      <div class="accounts">
+        <div class="account"><span class="label">CASH</span><strong id="cashBalance">RM300.00</strong><span class="muted" style="font-size:12px">Starting budget: RM300.00</span></div>
+        <div class="account"><span class="label">MAYBANK</span><strong id="bankBalance">RM439.80</strong><span class="muted" style="font-size:12px">Starting balance: RM439.80</span></div>
+      </div>
+    </article>
+    <article class="card"><div class="label">TOTAL SPENT</div><div class="big red" id="totalSpent">RM0.00</div></article>
+    <article class="card"><div class="label">TOTAL INCOME</div><div class="big green" id="totalIncome">RM0.00</div></article>
+  </section>
+
+  <section class="card section">
+    <h2>Account starting balances</h2>
+    <div class="formgrid">
+      <div class="field"><label for="cashStart">Cash budget (RM)</label><input id="cashStart" type="number" min="0" step="0.01" value="300"></div>
+      <div class="field"><label for="bankStart">Maybank balance (RM)</label><input id="bankStart" type="number" min="0" step="0.01" value="439.80"></div>
+    </div>
+    <p class="notice">These are starting balances for this tracker. Maybank is not connected to your bank account; update it manually or import a statement separately.</p>
+  </section>
+
+  <section class="card section">
+    <h2>Add transaction</h2>
+    <div class="tabs" role="group" aria-label="Transaction type">
+      <button type="button" class="active" data-kind="Expense">Expense</button>
+      <button type="button" data-kind="Income">Income</button>
+    </div>
+    <form id="txForm">
+      <div class="formgrid">
+        <div class="field"><label for="amount">Amount (RM)</label><input id="amount" type="number" min="0.01" step="0.01" placeholder="e.g. 5.00" required></div>
+        <div class="field"><label for="description">Description</label><input id="description" maxlength="80" placeholder="Food, transport, allowance..." required></div>
+        <div class="field"><label for="txDate">Date</label><input id="txDate" type="date" required></div>
+        <div class="field"><label for="txTime">Time (Malaysia time)</label><input id="txTime" type="time" required></div>
+        <div class="field full"><label for="account">Account</label><select id="account"><option value="Cash">Cash</option><option value="Maybank">Maybank</option></select></div>
+      </div>
+      <div class="btnrow"><button type="submit" id="addBtn">＋ Add expense</button></div>
+    </form>
+  </section>
+
+  <section class="card section">
+    <div class="row"><h2 style="margin:0">Transaction history</h2><span class="tag" id="recordCount">0 records</span></div>
+    <div class="history" id="history"><div class="empty">No transactions yet. Add your first transaction above.</div></div>
+    <div class="divider"></div>
+    <div class="row"><span class="muted">Total expenses</span><strong class="red" id="historySpent">RM0.00</strong></div>
+    <div class="row" style="margin-top:8px"><span class="muted">Total income</span><strong class="green" id="historyIncome">RM0.00</strong></div>
+  </section>
+
+  <section class="card section">
+    <h2>Backup & data</h2>
+    <div class="btnrow">
+      <button type="button" class="secondary" id="exportBtn">Download backup</button>
+      <label class="filebtn secondary" for="importFile">Import backup</label><input class="hidden" id="importFile" type="file" accept="application/json,.json">
+      <button type="button" class="dangerbtn" id="resetBtn">Reset tracker</button>
+    </div>
+    <p class="notice">Your records are saved in this browser on this device using local storage. Download a backup regularly, especially before clearing browser data or changing devices. Importing a backup replaces the current tracker data.</p>
+  </section>
+  <p class="notice" style="text-align:center;margin:18px 4px">Ikmal's Wallet · Private local tracker · Amounts in Malaysian Ringgit (RM)</p>
+</main>
+<script>
+(() => {
+  const KEY = "ikmals-wallet-v1";
+  const defaults = {cashStart:300, bankStart:439.80, transactions:[]};
+  let state = loadState();
+  let kind = "Expense";
+  const $ = id => document.getElementById(id);
+  const fmt = n => "RM" + Number(n).toFixed(2);
+  const today = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  };
+  function loadState(){
+    try { const saved=JSON.parse(localStorage.getItem(KEY)); return saved && Array.isArray(saved.transactions) ? {...defaults,...saved} : {...defaults}; }
+    catch { return {...defaults}; }
+  }
+  function save(){ localStorage.setItem(KEY,JSON.stringify(state)); }
+  function totals(account,type){
+    return state.transactions.filter(t=>(!account||t.account===account)&&(!type||t.kind===type)).reduce((s,t)=>s+t.amount,0);
+  }
+  function render(){
+    const cash=Number(state.cashStart)+totals("Cash","Income")-totals("Cash","Expense");
+    const bank=Number(state.bankStart)+totals("Maybank","Income")-totals("Maybank","Expense");
+    const spent=totals(null,"Expense"), income=totals(null,"Income");
+    $("cashBalance").textContent=fmt(cash); $("bankBalance").textContent=fmt(bank);
+    $("totalBalance").textContent=fmt(cash+bank); $("totalSpent").textContent=fmt(spent); $("totalIncome").textContent=fmt(income);
+    $("historySpent").textContent=fmt(spent); $("historyIncome").textContent=fmt(income);
+    $("recordCount").textContent=`${state.transactions.length} record${state.transactions.length===1?"":"s"}`;
+    $("cashStart").value=state.cashStart; $("bankStart").value=state.bankStart;
+    const list=[...state.transactions].sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
+    $("history").innerHTML="";
+    if(!list.length){$("history").innerHTML='<div class="empty">No transactions yet. Add your first transaction above.</div>';return;}
+    for(const t of list){
+      const row=document.createElement("div"); row.className="tx";
+      const info=document.createElement("div");
+      const name=document.createElement("div");name.className="txname";name.textContent=t.description;
+      const meta=document.createElement("div");meta.className="txmeta";meta.textContent=`${t.date} · ${t.time} · ${t.account}`;
+      info.append(name,meta);
+      const amount=document.createElement("div");amount.className=`amount ${t.kind==="Income"?"green":"red"}`;amount.textContent=`${t.kind==="Income"?"+":"−"}${fmt(t.amount)}`;
+      const del=document.createElement("button");del.type="button";del.className="small dangerbtn delete";del.textContent="Delete";
+      del.setAttribute("aria-label",`Delete ${t.description}`);
+      del.addEventListener("click",()=>{if(confirm("Delete this transaction?")){state.transactions=state.transactions.filter(x=>x.id!==t.id);save();render();}});
+      row.append(info,amount,del);$("history").append(row);
+    }
+  }
+  document.querySelectorAll("[data-kind]").forEach(btn=>btn.addEventListener("click",()=>{
+    kind=btn.dataset.kind;
+    document.querySelectorAll("[data-kind]").forEach(b=>b.classList.toggle("active",b===btn));
+    $("addBtn").textContent=kind==="Expense"?"＋ Add expense":"＋ Add income";
+  }));
+  $("txDate").value=today();
+  const now=new Date();$("txTime").value=`${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+  $("txForm").addEventListener("submit",e=>{
+    e.preventDefault();
+    const amount=Number($("amount").value);
+    if(!Number.isFinite(amount)||amount<=0)return alert("Enter an amount greater than zero.");
+    state.transactions.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),kind,amount,description:$("description").value.trim(),date:$("txDate").value,time:$("txTime").value,account:$("account").value});
+    save();render();$("amount").value="";$("description").value="";
+  });
+  ["cashStart","bankStart"].forEach(id=>$(id).addEventListener("change",()=>{
+    const n=Number($(id).value);
+    if(!Number.isFinite(n)||n<0){alert("Starting balance must be zero or more.");render();return;}
+    state[id]=n;save();render();
+  }));
+  $("exportBtn").addEventListener("click",()=>{
+    const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+    const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="ikmals-wallet-backup.json";a.click();URL.revokeObjectURL(url);
+  });
+  $("importFile").addEventListener("change",async e=>{
+    const file=e.target.files[0];if(!file)return;
+    try{
+      const data=JSON.parse(await file.text());
+      if(!Array.isArray(data.transactions)||!Number.isFinite(Number(data.cashStart))||!Number.isFinite(Number(data.bankStart)))throw new Error();
+      if(!confirm("Importing will replace the current tracker data. Continue?"))return;
+      state={cashStart:Number(data.cashStart),bankStart:Number(data.bankStart),transactions:data.transactions};save();render();alert("Backup imported.");
+    }catch{alert("That backup file is not valid.");}
+    e.target.value="";
+  });
+  $("resetBtn").addEventListener("click",()=>{
+    if(!confirm("Reset all transactions and restore RM300 cash and RM439.80 Maybank starting balances?"))return;
+    state={...defaults,transactions:[]};save();render();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
